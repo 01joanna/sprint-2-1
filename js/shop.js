@@ -47,6 +47,9 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
+    cart = []
+    window.alert("The cart was cleared succesfully")
+    console.log(cart)
 
 }
 
