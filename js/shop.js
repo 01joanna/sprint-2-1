@@ -37,10 +37,14 @@ function buy(id) {
                 id: getProduct.id,
                 name: getProduct.name,
                 price: getProduct.price,
+                type: getProduct.type,
+                offer: getProduct.offer,
                 quantity: 1
-            })
+            });
         }
         calculateTotal()
+        applyPromotionsCart()
+        printCart()
         console.log(cart)
     }
 }
@@ -51,25 +55,57 @@ function cleanCart() {
     cart = []
     window.alert("The cart was cleared succesfully")
     console.log(cart)
-
 }
 
 // Exercise 3
 function calculateTotal() {
+    total = 0;  
     cart.forEach(element => {
-        total += element.price * element.quantity
-    });
-    console.log(total)
-}
+        total += element.price * element.quantity;
+    })
 
+    return total;
+}
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    // Si l'usuari/ària compra 3 o més ampolles d'oli, el preu del producte es rebaixa un 20%.
+    // Quan es compren 10 o més productes per a fer pastissos, el preu del producte es rebaixa un 30%.
+
+    cart.forEach(element => {
+        if (element && element.offer) {
+            if (element.offer.number && element.quantity >= element.offer.number) {
+                const descuento = (element.price * element.offer.discount) / 100;
+                element.subtotalWithDiscount = (element.price * element.quantity) * (1 - descuento / 100);
+            }
+        }
+    })
+
 }
 
 // Exercise 5
 function printCart() {
-    // Fill the shopping cart modal manipulating the shopping cart dom
+    const cartList = document.getElementById('cart_list');
+    const totalID = document.getElementById('total_price');
+    let total = 0;
+    cartList.innerHTML = ''
+
+    cart.forEach(element => {
+        let subtotal = element.subtotalWithDiscount ? element.subtotalWithDiscount : element.quantity * element.price;
+
+        total += subtotal;
+        const tr = document.createElement('tr')
+        tr.innerHTML = `
+            <th scope="row">${element.name}</th>
+            <td>${element.price}</td>
+            <td>${element.quantity}</td>
+            <td>${subtotal}</td>
+            <td><button class="btn btn-danger" onclick="removeFromCart(${element.id})">Borrar</button></td>
+        `;
+        cartList.appendChild(tr)
+    })
+
+    totalID.innerHTML = total;
 }
 
 
