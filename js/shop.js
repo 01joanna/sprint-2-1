@@ -64,7 +64,7 @@ function calculateTotal() {
         total += element.price * element.quantity;
     })
 
-    return total;
+    return total.toFixed(2);
 }
 // Exercise 4
 function applyPromotionsCart() {
@@ -97,7 +97,7 @@ function printCart() {
             <th scope="row">${element.name}</th>
             <td>${element.price}</td>
             <td>${element.quantity}</td>
-            <td>${subtotal}</td>
+            <td>${subtotal.toFixed(2)}</td>
             <td><button class="btn btn-danger" onclick="removeFromCart(${element.id})">Borrar</button></td>
         `;
         cartList.appendChild(tr)
