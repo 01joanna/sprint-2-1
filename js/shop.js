@@ -74,13 +74,11 @@ function applyPromotionsCart() {
 
     cart.forEach(element => {
         if (element && element.offer) {
-            if (element.offer.number && element.quantity >= element.offer.number) {
-                const descuento = (element.price * element.offer.discount) / 100;
-                element.subtotalWithDiscount = (element.price * element.quantity) * (1 - descuento / 100);
+            if ( element.offer.number && element.quantity >= element.offer.number) {
+                const descuento = element.offer.percent / 100
+                element.subtotalWithDiscount = element.price * element.quantity * (1 - descuento)
             }
-        }
-    })
-
+        }})
 }
 
 // Exercise 5
