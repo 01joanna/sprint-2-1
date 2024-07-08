@@ -114,6 +114,16 @@ function printCart() {
 // Exercise 7
 function removeFromCart(id) {
 
+    const index = cart.findIndex(product => product.id === id)
+
+    if (index !== -1) {
+        cart.splice(index, 1)
+    }
+
+    calculateTotal()
+    applyPromotionsCart()
+    printCart()
+    
 }
 
 function open_modal() {
